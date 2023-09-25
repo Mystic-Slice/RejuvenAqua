@@ -5,7 +5,9 @@ The model aims to integrate and improve the existing water supply system. By bui
 
 The primary function of our system is to transfer water from a node with excess supply to a node with water shortage. The system also takes into account the possible future demand while choosing a donor. The simple functioning can be understood through the following image:
 
+<p align="center">
 <img src="./imgs/sample_working.png" width="500px">
+</p>
 
 This project requires focus on three fronts:
 ### 1. Node-level controller and data collection:
@@ -30,3 +32,16 @@ We use a modification of Dijkstra's algorithm for this purpose.
 
 The simplified version of the code can be found in `routing_algo.py`.
 
+## System Flow:
+
+### Local flow:
+
+<p align="center">
+<img src="./imgs/local_flow.png" width="500px">
+</p>
+
+### Global flow:
+
+<p align="center">
+<img src="./imgs/global_flow.png" width="500px">
+</p>
