@@ -13,9 +13,21 @@ This project requires focus on three fronts:
 ### 1. Node-level controller and data collection:
 Each node consists of an underground sump and an overhead tank (OHT). There exists a "local" control system that detects dropping water levels in the OHT and transfers water from the sump to the OHT. This systems doesn't communicate with the global system at all and so it is self-sustaining as long as there is sufficient level of water in the sump.
 
+Each node looks like this:
+
+<p align="center">
+<img src="./imgs/node-level-diagram.png" width="300px">
+</p>
+
 The global system is the network of sumps that manage water distribution among them. This requires each sump communicating with a central server to coordinate.
 
-Each node (sump + OHT) is governed by an ESP32 microcontroller and water level switch sensors which collects data and sends it to the central server periodically. The ESP32 also controls the motors and valves.
+The high level system looks like this:
+
+<p align="center">
+<img src="./imgs/deployment-diagram.png" width="500px">
+</p>
+
+Each node (sump + OHT) is governed by an ESP32 microcontroller and water level switch sensors which collects data and sends it to the central server periodically. The ESP32 also controls the motors and valves in response to the commands from the server.
 
 ### 2. Demand forecasting:
 The system predicts the future demand of water at each node from the usage data collected over a period of time. The trends identified from this data can be used to identify the optimal donor.
@@ -32,6 +44,8 @@ We use a modification of Dijkstra's algorithm for this purpose.
 
 The simplified version of the code can be found in `routing_algo.py`.
 
+The server sends the appropriate commands to each node along the path to make the ESP32s open the appropriate motors and valves.
+
 ## System Flow:
 
 ### Local flow:
@@ -45,3 +59,22 @@ The simplified version of the code can be found in `routing_algo.py`.
 <p align="center">
 <img src="./imgs/global_flow.png" width="500px">
 </p>
+
+## Prototype:
+We implemented this system as a prototype with 4 nodes. 
+
+We used the following technologies and hardware
+
+1. **Hardware:** 
+    - ESP32
+    - Water level switch sensor
+    - Relay module
+    - Servo motors
+    - Valves
+2. **Communication:** Wi-Fi (with MQTT protocol)
+3. **Cloud Services:** 
+    - AWS Iot Core (for MQTT)
+    - Amazon DynamoDb
+    - AWS Lambda (for handling alerts)
+
+The code for the demo visualization website can be found [here](https://github.com/mava123-0/rejuven-aqua-website)
